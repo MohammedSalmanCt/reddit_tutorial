@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "36796006740",
+    "project_id": "famous-archway-397605",
+    "storage_bucket": "famous-archway-397605.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:36796006740:android:77019b9ce2458a07f0c8c1",
+        "android_client_info": {
+          "package_name": "com.example.reddit_tutorial"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBrIdiOpEFOSVshU3R5pkop8UJBzBmnFNY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
