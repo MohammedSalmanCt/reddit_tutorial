@@ -9,6 +9,7 @@ class HomeScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final user=ref.watch(userProvider)!;
     return Scaffold(
+      backgroundColor: Colors.blue,
       body: Center(
         child: Text(user.name!),
       ),
