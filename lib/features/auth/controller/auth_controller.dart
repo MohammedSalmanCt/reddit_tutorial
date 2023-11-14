@@ -19,6 +19,10 @@ final authStateChangeProvider=StreamProvider((ref) {
  return authController.authStateChange;
 });
 
+final getUserDataProvider = StreamProvider.family((ref,String uid) {
+  final authController = ref.watch(authControlleProvider.notifier);
+  return authController.getUserData(uid);
+});
 class AuthController extends StateNotifier<bool>
 {
   final AuthRepository _authRepository;
@@ -34,9 +38,14 @@ class AuthController extends StateNotifier<bool>
 
   Future<void> signWithGoogle(BuildContext context)
   async {
+    UserModel? userModel;
     state =true;
     final user=await _authRepository.signWithGoogle();
     state =false;
-    user.fold((l) => showSnackBar(context,l.message), (UserModel) => _ref.read(userProvider.notifier).update((state) => UserModel ));
+    user.fold((l) => showSnackBar(context,l.message), (userModel) => _ref.read(userProvider.notifier).update((state) => userModel));
+  }
+  Stream<UserModel> getUserData(String uid)
+  {
+    return _authRepository.getUserData(uid);
   }
 }
