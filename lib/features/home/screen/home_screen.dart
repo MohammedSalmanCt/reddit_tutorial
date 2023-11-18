@@ -7,11 +7,36 @@ class HomeScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final user=ref.watch(userProvider)!;
+    final user=ref.watch(userProvider);
     return Scaffold(
       backgroundColor: Colors.blue,
+      appBar: AppBar(
+        title: const Text("Home"),
+        centerTitle: false,
+        leading: IconButton(
+          onPressed: () {
+
+          },
+          icon: Icon(Icons.menu),
+        ),
+        actions: [
+          IconButton(onPressed: () {
+
+          }, icon: Icon(Icons.search)),
+          IconButton(onPressed: () {
+
+          }, icon: CircleAvatar(
+            backgroundImage: NetworkImage(user!.profilePic),
+          ))
+        ],
+      ),
       body: Center(
-        child: Text(user.name!),
+        child: Column(
+          children: [
+            Text(user?.name??"asdadada"),
+            Text(user?.name??"asdadada"),
+          ],
+        ),
       ),
     );
   }

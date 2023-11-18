@@ -38,11 +38,10 @@ class AuthController extends StateNotifier<bool>
 
   Future<void> signWithGoogle(BuildContext context)
   async {
-    UserModel? userModel;
     state =true;
     final user=await _authRepository.signWithGoogle();
     state =false;
-    user.fold((l) => showSnackBar(context,l.message), (userModel) => _ref.read(userProvider.notifier).update((state) => userModel));
+    user.fold((l) => showSnackBar(context,l.message), (userModel) => _ref.read(userProvider.notifier).update((state) =>userModel));
   }
   Stream<UserModel> getUserData(String uid)
   {
