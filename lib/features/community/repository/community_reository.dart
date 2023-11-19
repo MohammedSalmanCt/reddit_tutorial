@@ -37,4 +37,16 @@ throw e.message!;
       return left(Failure(message: error.toString()));
     }
   }
+
+  Stream<List<Community>> getUserCommunities(String uid)
+  {
+    return _communities.where("members",arrayContains: uid).snapshots().map((event) {
+     List<Community> communities=[];
+     for(var i in event.docs)
+       {
+         communities.add(Community.fromMap(i.data() as Map<String,dynamic>));
+       }
+     return communities;
+    });
+  }
 }
