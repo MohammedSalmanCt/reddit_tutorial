@@ -37,7 +37,7 @@ class HomeScreen extends ConsumerWidget {
           ))
         ],
       ),
-      drawer: CommunityListDrawe(),
+      drawer: CommunityListDrawer(),
       body: Center(
         child: Column(
           children: [
