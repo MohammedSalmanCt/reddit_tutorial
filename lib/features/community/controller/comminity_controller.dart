@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:reddit_tutorial/core/contants/constants.dart';
 import 'package:reddit_tutorial/features/auth/controller/auth_controller.dart';
 import 'package:reddit_tutorial/features/community/repository/community_reository.dart';
 import 'package:reddit_tutorial/models/community_model.dart';
@@ -15,6 +16,13 @@ final communityControllerProvider =
 final userCommunitiesProvider = StreamProvider((ref){
   return ref.watch(communityControllerProvider.notifier).getUserCommunities();
 });
+
+/// 
+final getCommunityByNameProvider = StreamProvider.family((ref, String name) {
+  return ref
+      .watch(communityControllerProvider.notifier)
+      .getCommunityByName(name);
+});
 class CommunityController extends StateNotifier<bool> {
   final CommunityRepository _communityRepository;
   final Ref _ref;
@@ -29,8 +37,8 @@ class CommunityController extends StateNotifier<bool> {
     Community community = Community(
         id: name,
         name: name,
-        banner: "",
-        avatar: "",
+        banner: Constants.bannerDefault,
+        avatar: Constants.avatarDefault,
         members: [uid],
         mods: [uid]);
    final res=await _communityRepository.createCommunity(community);
@@ -41,7 +49,10 @@ class CommunityController extends StateNotifier<bool> {
   }
   Stream<List<Community>>getUserCommunities()
   {
-    final uid=_ref.read(userProvider)!.uid;
+    final uid=_ref.read(userProvider)!.name;
     return _communityRepository.getUserCommunities(uid);
+  }
+  Stream<Community> getCommunityByName(String name) {
+    return _communityRepository.getCommunityByName(name);
   }
 }
