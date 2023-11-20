@@ -3,10 +3,15 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:reddit_tutorial/core/common/loader.dart';
 import 'package:reddit_tutorial/features/auth/controller/auth_controller.dart';
 import 'package:reddit_tutorial/features/community/controller/comminity_controller.dart';
+import 'package:routemaster/routemaster.dart';
 
 class CommunityScreen extends ConsumerWidget {
   const CommunityScreen({super.key, required this.name});
   final String name;
+  void navigateToModTools(BuildContext context)
+  {
+    Routemaster.of(context).push("/mod-tools");
+  }
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     String communityName = Uri.decodeComponent(name);
@@ -52,9 +57,11 @@ class CommunityScreen extends ConsumerWidget {
                                 style: const TextStyle(
                                     fontSize: 19, fontWeight: FontWeight.bold),
                               ),
-                              data.mods.contains(user!.uid)?
+                              data.mods.contains(user!.name)?
                               OutlinedButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  navigateToModTools(context);
+                                },
                                 style: ElevatedButton.styleFrom(
                                     shape: RoundedRectangleBorder(
                                         borderRadius:
@@ -71,7 +78,7 @@ class CommunityScreen extends ConsumerWidget {
                                         BorderRadius.circular(20)),
                                     padding: const EdgeInsets.symmetric(
                                         horizontal: 25)),
-                                child: const Text("Join"),
+                                child:  Text(data.members.contains(user.name) ?"Joined" :"Join"),
                               )
                             ],
                           ),
@@ -82,7 +89,7 @@ class CommunityScreen extends ConsumerWidget {
                       )
                     ];
                   },
-                  body: const Text("Displayimg posts"),
+                  body: const Text("Displaying posts"),
                 ),
                 error: (Object error, StackTrace stackTrace) {
                   return Text(error.toString());

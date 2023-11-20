@@ -1,4 +1,5 @@
 import 'package:reddit_tutorial/features/community/screens/create_community_screen.dart';
+import 'package:reddit_tutorial/features/community/screens/mod_tools_screen.dart';
 import 'package:reddit_tutorial/features/home/screen/home_screen.dart';
 import 'package:routemaster/routemaster.dart';
 import 'package:flutter/material.dart';
@@ -21,4 +22,5 @@ final logedInRout=RouteMap(routes: {
       name: route.pathParameters['name']!,
     ),
   ),
+  '/mod-tools/:name':(routData)=> const MaterialPage(child: ModToolsScreen()),
 });
