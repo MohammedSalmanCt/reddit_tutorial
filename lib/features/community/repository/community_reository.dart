@@ -16,6 +16,7 @@ class CommunityRepository{
     required FirebaseFirestore firestore
 }):_firestore=firestore;
 
+
   CollectionReference get _communities=> _firestore.collection(FirebaseConstants.communitiesCollection);
   FutureVoid createCommunity(Community community)
   async{
@@ -49,4 +50,11 @@ throw e.message!;
      return communities;
     });
   }
+
+  Stream<Community> getCommunityByName(String name) {
+    return _communities.doc(name).snapshots().map(
+            (event) => Community.fromMap(event.data() as Map<String, dynamic>));
+  }
+
+
 }
