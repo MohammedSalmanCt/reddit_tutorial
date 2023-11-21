@@ -8,9 +8,9 @@ import 'package:routemaster/routemaster.dart';
 class CommunityScreen extends ConsumerWidget {
   const CommunityScreen({super.key, required this.name});
   final String name;
-  void navigateToModTools(BuildContext context)
+  void navigateToModTools(BuildContext context,communityName)
   {
-    Routemaster.of(context).push("/mod-tools");
+    Routemaster.of(context).push("/mod-tools/${communityName}");
   }
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -60,7 +60,7 @@ class CommunityScreen extends ConsumerWidget {
                               data.mods.contains(user!.name)?
                               OutlinedButton(
                                 onPressed: () {
-                                  navigateToModTools(context);
+                                  navigateToModTools(context,communityName);
                                 },
                                 style: ElevatedButton.styleFrom(
                                     shape: RoundedRectangleBorder(

@@ -40,7 +40,6 @@ class CommunityListDrawer extends ConsumerWidget {
                     ),
                     onTap: () {
                       navigateToCommunity(context, community);
-                      print("worlkeeeeeeeeeeeeeeeeeeeeeeees");
                     },
                   );
                 },),
