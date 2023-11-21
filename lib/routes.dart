@@ -1,4 +1,5 @@
 import 'package:reddit_tutorial/features/community/screens/create_community_screen.dart';
+import 'package:reddit_tutorial/features/community/screens/edir_community_scree.dart';
 import 'package:reddit_tutorial/features/community/screens/mod_tools_screen.dart';
 import 'package:reddit_tutorial/features/home/screen/home_screen.dart';
 import 'package:routemaster/routemaster.dart';
@@ -22,5 +23,6 @@ final logedInRout=RouteMap(routes: {
       name: route.pathParameters['name']!,
     ),
   ),
-  '/mod-tools/:name':(routData)=> const MaterialPage(child: ModToolsScreen()),
+  '/mod-tools/:name':(routData)=>  MaterialPage(child: ModToolsScreen(name: routData.pathParameters["name"]!,)),
+  '/edit-community/:name':(routDa)=>  MaterialPage(child: EditCommunityScreen(name: routDa.pathParameters["name"]!,)),
 });
