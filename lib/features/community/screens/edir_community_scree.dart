@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:reddit_tutorial/core/common/loader.dart';
 import 'package:reddit_tutorial/core/contants/constants.dart';
 import 'package:reddit_tutorial/features/community/controller/comminity_controller.dart';
+import 'package:reddit_tutorial/models/community_model.dart';
 
 import '../../../core/theme/pallet.dart';
 import '../../../core/utils.dart';
@@ -46,8 +47,14 @@ setState(() {
     }
   }
 
+  void save( Community community)
+  {
+    ref.read(communityControllerProvider.notifier).editCommunity(context: context, community: community, profileFile: profileFile, bannerFile: bannerFile);
+  }
+
   @override
   Widget build(BuildContext context) {
+    final isLoading=ref.watch(communityControllerProvider);
     String cummunityName = Uri.decodeComponent(widget.name);
     return ref.watch(getCommunityByNameProvider(cummunityName)).when(
       data: (data) {
@@ -56,9 +63,12 @@ setState(() {
           appBar: AppBar(
             title: const Text("Edit Community"),
             centerTitle: false,
-            actions: [TextButton(onPressed: () {}, child: const Text("Save"))],
+            actions: [TextButton(onPressed: () {
+              save(data);
+            }, child: const Text("Save"))],
           ),
-          body: Padding(
+          body: isLoading?Loader()
+         : Padding(
             padding: const EdgeInsets.all(8.0),
             child: Column(
               children: [
