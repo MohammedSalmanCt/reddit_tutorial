@@ -55,6 +55,19 @@ throw e.message!;
     return _communities.doc(name).snapshots().map(
             (event) => Community.fromMap(event.data() as Map<String, dynamic>));
   }
-
+FutureVoid editCommunity(Community community)
+async{
+  try{
+  return right(_communities.doc(community.name).update(community.toMap()));
+  }
+  on FirebaseException catch(e)
+  {
+    throw e.message!;
+  }
+  catch(e)
+  {
+    return left(Failure(message: e.toString()));
+  }
+}
 
 }
