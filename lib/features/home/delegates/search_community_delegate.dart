@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:reddit_tutorial/core/common/loader.dart';
 import 'package:reddit_tutorial/features/community/controller/comminity_controller.dart';
+import 'package:routemaster/routemaster.dart';
 
 class SearchCommunityDelegate extends SearchDelegate {
-  final Ref ref;
+  final WidgetRef ref;
   SearchCommunityDelegate({required this.ref});
 
   @override
@@ -30,7 +31,7 @@ class SearchCommunityDelegate extends SearchDelegate {
 
   @override
   Widget buildSuggestions(BuildContext context) {
- return   ref.watch(searchCommunityProvider(query)).when(
+ return  ref.watch(searchCommunityProvider(query)).when(
       data: (data) {
         return ListView.builder(
           itemCount: data.length,
@@ -40,8 +41,10 @@ class SearchCommunityDelegate extends SearchDelegate {
               leading: CircleAvatar(
                 backgroundImage: NetworkImage(community.avatar),
               ),
-              title: Text("r?${community.name}"),
-              onTap: () {},
+              title: Text("${community.name}"),
+              onTap: () {
+                navigateToCommunity(context, community.name);
+              },
             );
           },
         );
@@ -55,8 +58,8 @@ class SearchCommunityDelegate extends SearchDelegate {
     );
 
   }
-  void navigateToCommunity(BuildContext context, Sy community) {
-    Routemaster.of(context).push('/r/${community.name}');
+  void navigateToCommunity(BuildContext context, String communityName) {
+    Routemaster.of(context).push('/r/${communityName}');
   }
 
 }
