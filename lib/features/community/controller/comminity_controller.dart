@@ -2,7 +2,9 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:fpdart/fpdart.dart';
 import 'package:reddit_tutorial/core/contants/constants.dart';
+import 'package:reddit_tutorial/core/failure.dart';
 import 'package:reddit_tutorial/core/providers/storage_repositiry_provider.dart';
 import 'package:reddit_tutorial/features/auth/controller/auth_controller.dart';
 import 'package:reddit_tutorial/features/community/repository/community_reository.dart';
@@ -30,7 +32,7 @@ final getCommunityByNameProvider = StreamProvider.family((ref, String name) {
       .getCommunityByName(name);
 });
 
-final searchCommunityProvider = StreamProvider.family((ref,String query)  {
+final searchCommunityProvider = StreamProvider.family((ref, String query) {
   return ref.watch(communityControllerProvider.notifier).searchCommunity(query);
 });
 
@@ -64,6 +66,23 @@ class CommunityController extends StateNotifier<bool> {
     });
   }
 
+  void jionCommunyity(Community community, BuildContext context) async {
+    final user = _ref.read(userProvider)!;
+    Either<Failure, void> res;
+    if (community.members.contains(user.name)) {
+      res = await _communityRepository.leaveCommunity(community.name, user.name);
+    } else {
+      res = await _communityRepository.joinCommunity(community.name, user.name);
+    }
+    res.fold((l) => showSnackBar(context, l.message), (r) {
+      if (community.members.contains(user.name)) {
+        showSnackBar(context, "Community left successfully");
+      } else {
+        showSnackBar(context, "Community joined successfully");
+      }
+    });
+  }
+
   Stream<List<Community>> getUserCommunities() {
     final uid = _ref.read(userProvider)!.name;
     return _communityRepository.getUserCommunities(uid);
@@ -78,7 +97,7 @@ class CommunityController extends StateNotifier<bool> {
       required Community community,
       required File? profileFile,
       required File? bannerFile}) async {
-    state=true;
+    state = true;
     if (profileFile != null) {
       final res = await _strorageRepository.storeFile(
           path: "community/profile", id: community.name, file: profileFile);
@@ -95,11 +114,10 @@ class CommunityController extends StateNotifier<bool> {
     final res = await _communityRepository.editCommunity(community);
     res.fold((l) => showSnackBar(context, l.message),
         (r) => Routemaster.of(context).pop());
-    state=false;
-  }
-  Stream<List<Community>> searchCommunity(String query)
-  {
-    return _communityRepository.searchCommunity(query);
+    state = false;
   }
 
+  Stream<List<Community>> searchCommunity(String query) {
+    return _communityRepository.searchCommunity(query);
+  }
 }
