@@ -1,3 +1,4 @@
+import 'package:reddit_tutorial/features/community/screens/add_screen_mod.dart';
 import 'package:reddit_tutorial/features/community/screens/create_community_screen.dart';
 import 'package:reddit_tutorial/features/community/screens/edir_community_scree.dart';
 import 'package:reddit_tutorial/features/community/screens/mod_tools_screen.dart';
@@ -25,4 +26,5 @@ final logedInRout=RouteMap(routes: {
   ),
   '/mod-tools/:name':(routData)=>  MaterialPage(child: ModToolsScreen(name: routData.pathParameters["name"]!,)),
   '/edit-community/:name':(routDa)=>  MaterialPage(child: EditCommunityScreen(name: routDa.pathParameters["name"]!,)),
+  '/add_mods/:name':(routDat)=>  MaterialPage(child: AddModsScreen(name: routDat.pathParameters["name"]!,)),
 });
