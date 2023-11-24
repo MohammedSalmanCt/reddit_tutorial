@@ -34,6 +34,21 @@ class CommunityRepository {
     }
   }
 
+  FutureVoid joinCommunity()
+  async{
+    try {
+      return
+    }
+    on FirebaseException catch(e)
+    {
+      throw e.message!;
+    }
+    catch(e)
+    {
+      return left(Failure(message: e.toString()));
+    }
+  }
+
   Stream<List<Community>> getUserCommunities(String uid) {
     return _communities
         .where("members", arrayContains: uid)
