@@ -36,11 +36,15 @@ class HomeScreen extends ConsumerWidget {
           IconButton(onPressed: () {
             showSearch(context: context, delegate: SearchCommunityDelegate(ref: ref));
           }, icon: Icon(Icons.search)),
-          IconButton(onPressed: () {
-
-          }, icon: CircleAvatar(
-            backgroundImage: NetworkImage(user!.profilePic),
-          ))
+          Builder(
+            builder: (context) {
+              return IconButton(onPressed: () {
+                displayEndDrawer(context);
+              }, icon: CircleAvatar(
+                backgroundImage: NetworkImage(user!.profilePic),
+              ));
+            }
+          )
         ],
       ),
       drawer: CommunityListDrawer(),
