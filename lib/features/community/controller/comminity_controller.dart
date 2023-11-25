@@ -51,7 +51,7 @@ class CommunityController extends StateNotifier<bool> {
 
   void createCommunity(String name, BuildContext context) async {
     state = true;
-    final uid = _ref.read(userProvider)?.name ?? "";
+    final uid = _ref.read(userProvider)?.uid ?? "";
     Community community = Community(
         id: name,
         name: name,
@@ -69,13 +69,13 @@ class CommunityController extends StateNotifier<bool> {
   void jionCommunyity(Community community, BuildContext context) async {
     final user = _ref.read(userProvider)!;
     Either<Failure, void> res;
-    if (community.members.contains(user.name)) {
-      res = await _communityRepository.leaveCommunity(community.name, user.name);
+    if (community.members.contains(user.uid)) {
+      res = await _communityRepository.leaveCommunity(community.name, user.uid);
     } else {
-      res = await _communityRepository.joinCommunity(community.name, user.name);
+      res = await _communityRepository.joinCommunity(community.name, user.uid);
     }
     res.fold((l) => showSnackBar(context, l.message), (r) {
-      if (community.members.contains(user.name)) {
+      if (community.members.contains(user.uid)) {
         showSnackBar(context, "Community left successfully");
       } else {
         showSnackBar(context, "Community joined successfully");
@@ -84,7 +84,7 @@ class CommunityController extends StateNotifier<bool> {
   }
 
   Stream<List<Community>> getUserCommunities() {
-    final uid = _ref.read(userProvider)!.name;
+    final uid = _ref.read(userProvider)!.uid;
     return _communityRepository.getUserCommunities(uid);
   }
 
