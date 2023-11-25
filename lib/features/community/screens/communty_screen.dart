@@ -62,7 +62,7 @@ class CommunityScreen extends ConsumerWidget {
                                 style: const TextStyle(
                                     fontSize: 19, fontWeight: FontWeight.bold),
                               ),
-                              data.mods.contains(user!.name)?
+                              data.mods.contains(user!.uid)?
                               OutlinedButton(
                                 onPressed: () {
                                   navigateToModTools(context,communityName);
@@ -85,7 +85,7 @@ class CommunityScreen extends ConsumerWidget {
                                         BorderRadius.circular(20)),
                                     padding: const EdgeInsets.symmetric(
                                         horizontal: 25)),
-                                child:  Text(data.members.contains(user.name) ?"Joined" :"Join"),
+                                child:  Text(data.members.contains(user.uid) ?"Joined" :"Join"),
                               )
                             ],
                           ),
