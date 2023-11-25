@@ -24,9 +24,14 @@ class _AddModsScreenState extends ConsumerState<AddModsScreen> {
         data: (community)=>ListView.builder(
         itemCount: community.members.length,
         itemBuilder: (BuildContext context,int  index) {
+          print("ssssssssssssssssssssssssssssssssssssssssssssss");
+          print(community.name);
           final member=community.members[index];
           return ref.watch(getUserDataProvider(member))
+          /// getUserDataProvider il uid vechaan stream but memberil name ann
               .when(data: (user) {
+                print("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+                print(user.name);
                 if(community.mods.contains(member))
                   {
                     uids.add(member);
@@ -34,7 +39,7 @@ class _AddModsScreenState extends ConsumerState<AddModsScreen> {
             return CheckboxListTile(
               value: true,
               onChanged: (value) {},
-              title: Text(user.name),
+              title: Text("user.name"),
             );
           }, error: (error, stackTrace) {
             return Text(error.toString());
