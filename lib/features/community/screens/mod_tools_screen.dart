@@ -10,8 +10,6 @@ class ModToolsScreen extends StatelessWidget {
   }
   void navigateToAddMods(BuildContext context,cname)
   {
-    print("ccccccccccccccccccccccccccc");
-    print(cname);
     Routemaster.of(context).push('/add_mods/${cname}');
   }
   @override
@@ -34,8 +32,6 @@ class ModToolsScreen extends StatelessWidget {
             leading: const Icon(Icons.edit),
             title: const Text("Edit community"),
             onTap: (){
-              print("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb");
-              print(cName);
               navigateToEditCommunity(context,cName);
             }
           )
