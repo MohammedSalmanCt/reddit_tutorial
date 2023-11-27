@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:reddit_tutorial/core/common/loader.dart';
 
+import '../../../core/theme/pallet.dart';
 import '../controller/comminity_controller.dart';
 
 class CreateCommunityScreen extends ConsumerStatefulWidget {
@@ -35,8 +36,9 @@ class _CreateCommunityScreenState extends ConsumerState<CreateCommunityScreen> {
   @override
   Widget build(BuildContext context) {
     final isLoading=ref.watch(communityControllerProvider);
+    final currentheme=ref.watch(themeNotifierProvider);
     return Scaffold(
-      backgroundColor: Colors.black,
+     backgroundColor:currentheme.colorScheme.background,
       appBar: AppBar(
         title: Text("Create a community"),
       ),
