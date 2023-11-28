@@ -70,7 +70,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
     return ref.watch(getUserDataProvider(widget.uid)).when(
       data: (data) {
         return Scaffold(
-          backgroundColor:currentheme.colorScheme.background,
+          backgroundColor:currentheme.backgroundColor,
           appBar: AppBar(
             title: const Text("Edit Profile"),
             centerTitle: false,
