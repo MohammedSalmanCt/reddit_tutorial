@@ -3,13 +3,13 @@ import 'package:reddit_tutorial/features/community/screens/create_community_scre
 import 'package:reddit_tutorial/features/community/screens/edir_community_scree.dart';
 import 'package:reddit_tutorial/features/community/screens/mod_tools_screen.dart';
 import 'package:reddit_tutorial/features/home/screen/home_screen.dart';
-import 'package:reddit_tutorial/features/post_screen/add_post_type_screen.dart';
 import 'package:reddit_tutorial/user_profile/screen/edit_profile.dart';
 import 'package:reddit_tutorial/user_profile/screen/user_profile_screen.dart';
 import 'package:routemaster/routemaster.dart';
 import 'package:flutter/material.dart';
 import 'features/auth/screen/login_screen.dart';
 import 'features/community/screens/communty_screen.dart';
+import 'features/post/screen/add_post_type_screen.dart';
 
 //////LogedOutRoute
 
