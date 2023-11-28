@@ -55,11 +55,12 @@ setState(() {
   @override
   Widget build(BuildContext context) {
     final isLoading=ref.watch(communityControllerProvider);
+    final currentheme=ref.watch(themeNotifierProvider);
     String cummunityName = Uri.decodeComponent(widget.name);
     return ref.watch(getCommunityByNameProvider(cummunityName)).when(
       data: (data) {
         return Scaffold(
-          backgroundColor: Pallete.darkModeAppTheme.backgroundColor,
+          backgroundColor:currentheme.backgroundColor,
           appBar: AppBar(
             title: const Text("Edit Community"),
             centerTitle: false,
@@ -83,7 +84,7 @@ setState(() {
                         radius: const Radius.circular(10),
                         dashPattern: const [10, 4],
                         strokeCap: StrokeCap.round,
-                        color: Pallete.darkModeAppTheme.textTheme.bodyText2!.color!,
+                        color: currentheme.textTheme.bodyText2!.color!,
                         child: Container(
                           width: double.infinity,
                           height: 150,
