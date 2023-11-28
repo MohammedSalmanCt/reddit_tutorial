@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../features/feed/feed_screen.dart';
-import '../../features/post_screen/add_post_screen.dart';
+import '../../features/post/screen/add_post_screen.dart';
 
 class Constants {
   static const logoPath='assets/images/logo.png';
