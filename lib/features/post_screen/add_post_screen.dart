@@ -1,20 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:reddit_tutorial/core/theme/pallet.dart';
+import 'package:routemaster/routemaster.dart';
 
 class AddPostScreen extends ConsumerWidget {
   const AddPostScreen({super.key});
 
+  void navigateToType(BuildContext context,String type)
+  {
+Routemaster.of(context).push('/add-post/$type');
+  }
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     double cardHeigthandWidth=120;
     double iconSize=60;
     final currentTheme=ref.watch(themeNotifierProvider);
-    return Wrap(
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
          GestureDetector(
            onTap: () {
-
+             navigateToType(context,"image");
            },
            child: SizedBox(
              height: cardHeigthandWidth,
@@ -31,7 +38,7 @@ class AddPostScreen extends ConsumerWidget {
          ),
         GestureDetector(
            onTap: () {
-
+             navigateToType(context,"text");
            },
            child: SizedBox(
              height: cardHeigthandWidth,
@@ -48,7 +55,7 @@ class AddPostScreen extends ConsumerWidget {
          ),
         GestureDetector(
            onTap: () {
-
+             navigateToType(context,"link");
            },
            child: SizedBox(
              height: cardHeigthandWidth,
