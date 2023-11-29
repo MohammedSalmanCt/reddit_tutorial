@@ -2,6 +2,7 @@ import 'package:any_link_preview/any_link_preview.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:reddit_tutorial/core/contants/constants.dart';
 import 'package:reddit_tutorial/features/auth/controller/auth_controller.dart';
 
 import '../../models/post_model.dart';
@@ -108,7 +109,46 @@ class PostCard extends ConsumerWidget {
                                   color: Colors.grey
                                 ),),
                               ),
-                            ))
+                            )),
+                          Row(
+                            children: [
+                              Row(
+                                children: [
+                                  IconButton(onPressed: () {
+
+                                  }, icon:  Icon(Constants.up,
+                                  size: 30,
+                                  color: post.upvotes.contains(user.uid)?Pallete.redColor:null,)
+                                  ),
+                                  Text('${post.upvotes.length -post.downvotes.length ==0 ?"vote": post.upvotes.length -post.downvotes.length}',
+                                  style: TextStyle(
+                                    fontSize: 17
+                                  )),
+                                  IconButton(onPressed: () {
+
+                                  }, icon:  Icon(Constants.down,
+                                    size: 30,
+                                    color: post.downvotes.contains(user.uid)?Pallete.blueColor:null,)
+                                  ),
+                                ],
+                              ),
+                              Row(
+                                children: [
+                                  IconButton(onPressed: () {
+
+                                  }, icon:  Icon(Icons.comment,
+                                  size: 30,
+                                  color: post.upvotes.contains(user.uid)?Pallete.redColor:null,)
+                                  ),
+                                  Text('${post.commentCount ==0 ?"comment": post.commentCount}',
+                                  style: const TextStyle(
+                                    fontSize: 17
+                                  )),
+
+                                ],
+                              )
+                            ],
+                          )
                         ],
                       ),
                     )
