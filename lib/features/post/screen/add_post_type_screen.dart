@@ -78,6 +78,7 @@ class _AddPostTypeScreenState extends ConsumerState<AddPostTypeScreen> {
   @override
   Widget build(BuildContext context) {
     final currentTheme = ref.watch(themeNotifierProvider);
+    final isLoading=ref.watch(postControllerProvider);
     final isTypeImage = widget.type == "image";
     final isTypeText = widget.type == "text";
     final isTypeLink = widget.type == "link";
@@ -87,10 +88,12 @@ class _AddPostTypeScreenState extends ConsumerState<AddPostTypeScreen> {
         title: Text("Post ${widget.type}"),
         centerTitle: true,
         actions: [TextButton(onPressed: () {
+          print("ssssssssssssssssssssssssssss");
           sharePost();
         }, child: const Text("Share"))],
       ),
-      body: Padding(
+      body:isLoading?const Loader()
+          :Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
           children: [
