@@ -1,3 +1,4 @@
+import 'package:any_link_preview/any_link_preview.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -34,6 +35,7 @@ class PostCard extends ConsumerWidget {
                               vertical: 4, horizontal: 16)
                           .copyWith(right: 0),
                       child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -77,7 +79,36 @@ class PostCard extends ConsumerWidget {
                                     )),
                             ],
                           ),
+                          Padding(
+                            padding: const EdgeInsets.all(10),
+                            child: Text(post.title,style: const TextStyle(
+                              fontSize:19,
+                              fontWeight: FontWeight.bold
+                            ),),
+                          ),
+                          if(isTypeImage)
+                            SizedBox(height: MediaQuery.of(context).size.height *(0.35),
+                            width: double.infinity,
+                            child: Image.network(post.link!,
+                            fit: BoxFit.fill),),
 
+                          if(isTypeLink)
+                            SizedBox(height: MediaQuery.of(context).size.height *(0.35),
+                            width: double.infinity,
+                            child: AnyLinkPreview(displayDirection: UIDirection.uiDirectionHorizontal,
+                              link: post.link!,)),
+                          if(isTypeText)
+                            SizedBox(height: MediaQuery.of(context).size.height *(0.35),
+                            width: double.infinity,
+                            child: Container(
+                              alignment: Alignment.bottomLeft,
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 15),
+                                child: Text(post.description!,style: const TextStyle(
+                                  color: Colors.grey
+                                ),),
+                              ),
+                            ))
                         ],
                       ),
                     )

@@ -81,7 +81,7 @@ class PostController extends StateNotifier<bool> {
         commentCount: 0,
         username: user.name,
         uid: user.uid,
-        type: "text",
+        type: "link",
         createdAt: DateTime.now(),
         awards: [],
         link: link);
@@ -105,7 +105,7 @@ class PostController extends StateNotifier<bool> {
     final user = _ref.read(userProvider)!;
     final imageRes=await _strorageRepository.storeFile(path: "posts/${selectedCommunity.name}", id: postId, file: file);
    
-    imageRes.fold((l) => showSnackBar(context,l.message), (r)async{
+    imageRes.fold((l) => showSnackBar(context,l.message), (imgUrl)async{
       final Post post = Post(
         id: postId,
         title: title,
@@ -116,9 +116,10 @@ class PostController extends StateNotifier<bool> {
         commentCount: 0,
         username: user.name,
         uid: user.uid,
-        type: "text",
+        type: "image",
         createdAt: DateTime.now(),
         awards: [],
+        link: imgUrl
       );
       final res=await _postRepository.addPost(post);
       state=false;
