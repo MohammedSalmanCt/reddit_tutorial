@@ -1,4 +1,3 @@
-import 'dart:html';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +9,7 @@ import '../../../core/failure.dart';
 import '../../../core/type_def.dart';
 import '../../../models/community_model.dart';
 import '../../../models/post_model.dart';
+import '../../../models/comment_model.dart';
 
 final postRepositoryProvider = Provider((ref) {
   return PostRepository(firestore: ref.watch(firestoreProvider));
@@ -98,13 +98,26 @@ class PostRepository {
         .map((event) => Post.fromMap(event.data() as Map<String, dynamic>));
   }
 
-  FutureVoid addComment(Comment comment) async {
+  FutureVoid addComment(CommentModel comment) async {
     try {
-      return right(_posts.doc(post.id).delete());
+    await  _comments.doc(comment.id).set(comment.toMap());
+      return right(_posts.doc(comment.postId).update({
+        "commentCount":FieldValue.increment(1),
+      }));
     } on FirebaseException catch (e) {
       throw e.message!;
     } catch (error) {
       return left(Failure(message: error.toString()));
     }
+  }
+
+  Stream<List<CommentModel>> getComments(String postId) {
+    return _comments
+        .where("postId",isEqualTo: postId)
+        .orderBy("createdAt", descending: true)
+        .snapshots()
+        .map((event) => event.docs
+        .map((e) => CommentModel.fromMap(e.data() as Map<String, dynamic>))
+        .toList());
   }
 }
