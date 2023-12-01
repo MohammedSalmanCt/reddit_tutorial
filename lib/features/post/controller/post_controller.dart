@@ -19,6 +19,10 @@ final userPostProvider = StreamProvider.family((ref,List<Community> communities)
   return ref.watch(postControllerProvider.notifier).fetchUserPosts(communities);
 });
 
+final getPostBiIdProvider = StreamProvider.family((ref,String postId)  {
+  return ref.watch(postControllerProvider.notifier).getPostId(postId);
+});
+
 class PostController extends StateNotifier<bool> {
   final PostRepository _postRepository;
   final Ref _ref;
@@ -137,5 +141,28 @@ class PostController extends StateNotifier<bool> {
         return _postRepository.fetchUserPosts(communities);
       }
     return Stream.value([]);
+  }
+
+  Future<void> deletePost(Post post,BuildContext context)
+  async {
+    final res=await _postRepository.deletePost(post);
+    res.fold((l) => showSnackBar(context,l.message), (r) => showSnackBar(context, "Deleted successfully"));
+  }
+
+  void upvote(Post post)
+  async{
+    final userId=_ref.read(userProvider)!.uid;
+    _postRepository.upvote(post, userId);
+  }
+
+  void downvote(Post post)
+  async{
+    final userId=_ref.read(userProvider)!.uid;
+    _postRepository.downvote(post, userId);
+  }
+
+  Stream<Post> getPostId(String postId)
+  {
+    return _postRepository.getPostId(postId);
   }
 }
