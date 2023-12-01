@@ -6,6 +6,8 @@ import 'package:reddit_tutorial/features/community/controller/comminity_controll
 import 'package:reddit_tutorial/models/community_model.dart';
 import 'package:routemaster/routemaster.dart';
 
+import '../../../core/common/post_card.dart';
+
 class CommunityScreen extends ConsumerWidget {
   const CommunityScreen({super.key, required this.name});
   final String name;
@@ -96,15 +98,30 @@ class CommunityScreen extends ConsumerWidget {
                       )
                     ];
                   },
-                  body: const Text("Displaying posts"),
-                ),
-                error: (Object error, StackTrace stackTrace) {
-                  return Text(error.toString());
-                },
-                loading: () {
-                  return Loader();
-                },
-              )),
+                  body: ref.watch(getCommunityPostProvider(communityName)).when(
+                    data: (data) {
+                      return ListView.builder(
+                        itemCount: data.length,
+                        itemBuilder: (context, index) {
+                          final post = data[index];
+                          return PostCard(post: post);
+                        },
+                      );
+                    },
+                    error: (error, stackTrace) {
+                      return Text(error.toString());
+                    },
+                    loading: () => const Loader(),
+                  )),
+            error: (Object error, StackTrace stackTrace) {
+              return Text(error.toString());
+            },
+            loading: () {
+              return Loader();
+            },
+          )
+
+    )
     );
   }
 }
