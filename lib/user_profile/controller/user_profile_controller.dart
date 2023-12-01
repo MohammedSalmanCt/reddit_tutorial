@@ -9,6 +9,7 @@ import 'package:reddit_tutorial/user_profile/repository/user_profile_repository.
 import 'package:routemaster/routemaster.dart';
 
 import '../../core/utils.dart';
+import '../../models/post_model.dart';
 
 final userProfileControllerProvider =
 StateNotifierProvider<UserProfileController, bool>((ref) {
@@ -16,6 +17,10 @@ StateNotifierProvider<UserProfileController, bool>((ref) {
       userProfileRepoitory: ref.watch(userProfileRepositoryProvider),
       ref: ref,
       storageRepository: ref.watch(storageRepositoryProvider));
+});
+
+final getUserPostsProvider = StreamProvider.family((ref, String uid)  {
+  return ref.read(userProfileControllerProvider.notifier).getPost(uid);
 });
 
 class UserProfileController extends StateNotifier<bool>{
@@ -55,5 +60,10 @@ class UserProfileController extends StateNotifier<bool>{
               Routemaster.of(context).pop();
             });
     state = false;
+  }
+
+  Stream<List<Post>> getPost(String uid)
+  {
+    return _profileRepoitory.getPost(uid);
   }
 }

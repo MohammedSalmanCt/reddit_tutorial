@@ -3,6 +3,7 @@ import 'package:reddit_tutorial/features/community/screens/create_community_scre
 import 'package:reddit_tutorial/features/community/screens/edir_community_scree.dart';
 import 'package:reddit_tutorial/features/community/screens/mod_tools_screen.dart';
 import 'package:reddit_tutorial/features/home/screen/home_screen.dart';
+import 'package:reddit_tutorial/features/post/screen/comment_screen.dart';
 import 'package:reddit_tutorial/user_profile/screen/edit_profile.dart';
 import 'package:reddit_tutorial/user_profile/screen/user_profile_screen.dart';
 import 'package:routemaster/routemaster.dart';
@@ -33,4 +34,5 @@ final logedInRout=RouteMap(routes: {
   '/u/:uid':(routDat)=>  MaterialPage(child: UserProfile(uid: routDat.pathParameters["uid"]!,)),
   '/edit-profile/:uid':(routDat)=>  MaterialPage(child: EditProfileScreen(uid: routDat.pathParameters["uid"]!,)),
   '/add-post/:type':(routDat)=>  MaterialPage(child: AddPostTypeScreen(type: routDat.pathParameters["type"]!,)),
+  '/post/:postId/comments':(routDat)=>  MaterialPage(child: CommentScreen(postId: routDat.pathParameters["postId"]!,)),
 });
