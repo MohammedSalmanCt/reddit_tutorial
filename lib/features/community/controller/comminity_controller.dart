@@ -11,6 +11,7 @@ import 'package:reddit_tutorial/features/community/repository/community_reositor
 import 'package:reddit_tutorial/models/community_model.dart';
 import 'package:routemaster/routemaster.dart';
 import '../../../core/utils.dart';
+import '../../../models/post_model.dart';
 
 final communityControllerProvider =
     StateNotifierProvider<CommunityController, bool>((ref) {
@@ -23,6 +24,10 @@ final communityControllerProvider =
 /// user community stream
 final userCommunitiesProvider = StreamProvider((ref) {
   return ref.watch(communityControllerProvider.notifier).getUserCommunities();
+});
+
+final getCommunityPostProvider = StreamProvider.family((ref,String name) {
+  return ref.watch(communityControllerProvider.notifier).getCommunityPost(name);
 });
 
 ///
@@ -126,5 +131,8 @@ res.fold((l) => showSnackBar(context,l.message), (r) => Routemaster.of(context).
 
   Stream<List<Community>> searchCommunity(String query) {
     return _communityRepository.searchCommunity(query);
+  }
+  Stream<List<Post>> getCommunityPost(String name) {
+    return _communityRepository.getCommunityPost(name);
   }
 }

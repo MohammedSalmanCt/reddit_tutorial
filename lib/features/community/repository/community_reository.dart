@@ -7,6 +7,8 @@ import 'package:reddit_tutorial/core/providers/firebase_provider.dart';
 import 'package:reddit_tutorial/core/type_def.dart';
 import 'package:reddit_tutorial/models/community_model.dart';
 
+import '../../../models/post_model.dart';
+
 final communityRepositoryProvider = Provider<CommunityRepository>((ref) {
   return CommunityRepository(firestore: ref.watch(firestoreProvider));
 });
@@ -18,6 +20,8 @@ class CommunityRepository {
 
   CollectionReference get _communities =>
       _firestore.collection(FirebaseConstants.communitiesCollection);
+  CollectionReference get _post =>
+      _firestore.collection(FirebaseConstants.postsCollection);
   FutureVoid createCommunity(Community community) async {
     try {
       var communityDoc = await _communities.doc(community.name).get();
@@ -79,6 +83,16 @@ class CommunityRepository {
     } catch (e) {
       return left(Failure(message: e.toString()));
     }
+  }
+
+  Stream<List<Post>> getCommunityPost(String name) {
+    return _post
+        .where("communityName", isEqualTo: name)
+        .orderBy("createdAt", descending: true)
+        .snapshots()
+        .map((event) => event.docs
+        .map((e) => Post.fromMap(e.data() as Map<String, dynamic>))
+        .toList());
   }
 
   Stream<List<Community>> getUserCommunities(String uid) {
