@@ -36,7 +36,8 @@ void onPageChanged(int page)
 }
   @override
   Widget build(BuildContext context) {
-    final user=ref.watch(userProvider);
+    final user=ref.watch(userProvider)!;
+    final isGuest=!user.isAuthenticated;
     final currentheme=ref.watch(themeNotifierProvider);
     return Scaffold(
       appBar: AppBar(
@@ -66,9 +67,9 @@ void onPageChanged(int page)
         ],
       ),
       body: Constants.tabWidgets[_page],
-      drawer: CommunityListDrawer(),
-      endDrawer:const ProfileDrawer() ,
-      bottomNavigationBar: CupertinoTabBar(
+      drawer: const CommunityListDrawer(),
+      endDrawer: isGuest ? null:const ProfileDrawer() ,
+      bottomNavigationBar:isGuest ? null: CupertinoTabBar(
         activeColor: currentheme.iconTheme.color,
         backgroundColor: currentheme.backgroundColor,
         items: const[

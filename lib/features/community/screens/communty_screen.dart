@@ -22,7 +22,8 @@ class CommunityScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     String communityName = Uri.decodeComponent(name);
-    final user=ref.watch(userProvider);
+    final user=ref.watch(userProvider)!;
+    final isGuest=!user.isAuthenticated;
     return SafeArea(
       child: Scaffold(
           body: ref.read(getCommunityByNameProvider(communityName)).when(
@@ -64,7 +65,8 @@ class CommunityScreen extends ConsumerWidget {
                                 style: const TextStyle(
                                     fontSize: 19, fontWeight: FontWeight.bold),
                               ),
-                              data.mods.contains(user!.uid)?
+                              if(!isGuest)
+                              data.mods.contains(user.uid)?
                               OutlinedButton(
                                 onPressed: () {
                                   navigateToModTools(context,communityName);
