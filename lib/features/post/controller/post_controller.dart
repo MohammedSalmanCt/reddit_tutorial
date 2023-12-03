@@ -71,7 +71,10 @@ class PostController extends StateNotifier<bool> {
         description: description);
 
     final res = await _postRepository.addPost(post);
+if(context.mounted)
+  {
     _ref.read(userProfileControllerProvider.notifier).updateUserKarma(UserKarma.textPost, context);
+  }
     state = false;
     res.fold((l) => showSnackBar(context, l.message), (r) {
       showSnackBar(context, "Posted Successfully");
@@ -102,7 +105,11 @@ class PostController extends StateNotifier<bool> {
         awards: [],
         link: link);
 
-    final res = await _postRepository.addPost(post);    _ref.read(userProfileControllerProvider.notifier).updateUserKarma(UserKarma.linkPost, context);
+    final res = await _postRepository.addPost(post);
+if(context.mounted)
+  {
+    _ref.read(userProfileControllerProvider.notifier).updateUserKarma(UserKarma.linkPost, context);
+  }
     state = false;
     res.fold((l) => showSnackBar(context, l.message), (r) {
       showSnackBar(context, "Posted Successfully");
@@ -137,7 +144,10 @@ class PostController extends StateNotifier<bool> {
           awards: [],
           link: imgUrl);
       final res = await _postRepository.addPost(post);
-      _ref.read(userProfileControllerProvider.notifier).updateUserKarma(UserKarma.imagePost, context);
+if(context.mounted)
+  {
+    _ref.read(userProfileControllerProvider.notifier).updateUserKarma(UserKarma.imagePost, context);
+  }
       state = false;
       res.fold((l) => showSnackBar(context, l.message), (r) {
         showSnackBar(context, "Posted Successfully");
@@ -155,7 +165,10 @@ class PostController extends StateNotifier<bool> {
 
   Future<void> deletePost(Post post, BuildContext context) async {
     final res = await _postRepository.deletePost(post);
-    _ref.read(userProfileControllerProvider.notifier).updateUserKarma(UserKarma.deletePost, context);
+   if(context.mounted)
+     {
+       _ref.read(userProfileControllerProvider.notifier).updateUserKarma(UserKarma.deletePost, context);
+     }
     res.fold((l) => showSnackBar(context, l.message),
         (r) => showSnackBar(context, "Deleted successfully"));
   }
@@ -188,10 +201,28 @@ class PostController extends StateNotifier<bool> {
         profilePic: user.profilePic,
         username: user.name);
    final res=await _postRepository.addComment(comment);
+   if(context.mounted)
+     {
+       _ref.read(userProfileControllerProvider.notifier).updateUserKarma(UserKarma.comment, context);
+     }
    res.fold((l) => showSnackBar(context,l.message), (r) => null);
   }
 
   Stream<List<CommentModel>> getComments(String postId) {
     return _postRepository.getComments(postId);
   }
+  void awardPost({required Post post,required String award,required BuildContext context})
+  async{
+    final user=_ref.read(userProvider)!;
+    final res=await _postRepository.awardPost(post, award, user.uid);
+    res.fold((l) => showSnackBar(context, l.message), (r) {
+      _ref.read(userProfileControllerProvider.notifier).updateUserKarma(UserKarma.awardPost,context);
+      _ref.read(userProvider.notifier).update((state) {
+        state?.awards.remove(award);
+        return state;
+      });
+    Routemaster.of(context).pop();
+    });
+  }
+
 }

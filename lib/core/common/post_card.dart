@@ -29,6 +29,12 @@ ref.read(postControllerProvider.notifier).upvote(post);
   {
 ref.read(postControllerProvider.notifier).downvote(post);
   }
+
+  void awardPost(WidgetRef ref,BuildContext context,String award)
+  {
+ref.read(postControllerProvider.notifier).awardPost(context: context,post: post,award:award );
+  }
+
   void navigateToUser(BuildContext context)
   {
    Routemaster.of(context).push("/u/${post.uid}");
@@ -122,6 +128,16 @@ ref.read(postControllerProvider.notifier).downvote(post);
                                     )),
                             ],
                           ),
+                          if(post.awards.isNotEmpty)...[
+                            const SizedBox(height: 5,),
+                            SizedBox(height: 25,
+                            child: ListView.builder(scrollDirection: Axis.horizontal,
+                              itemCount: post.awards.length,itemBuilder: (context, index) {
+                           final award=post.awards[index];
+                            return Image.asset(Constants.awards[award]!,height: 23,);
+                            },),)
+                          ],
+
                           Padding(
                             padding: const EdgeInsets.all(10),
                             child: Text(post.title,style: const TextStyle(
@@ -203,8 +219,29 @@ ref.read(postControllerProvider.notifier).downvote(post);
                              return const SizedBox();
                               }, error: (error, stackTrace) {
                                 return Text(error.toString());
-                              }, loading: () => Loader(),)
+                              }, loading: () => Loader(),),
+                              IconButton(onPressed: () {
+                                showDialog(context: context, builder: (context) =>  Dialog(child:
+                                Padding(padding:
+                                const EdgeInsets.all(20),
+                                child: GridView.builder(
+                                    shrinkWrap: true,gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: 4),
+                                  itemCount: user.awards.length,
+                                  itemBuilder: (BuildContext  context,int index) {
+                                  final award=user.awards[index];
+                                  return GestureDetector(
+                                    onTap: () => awardPost(ref,context,award),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Image.asset(Constants.awards[award]!),
+                                    ),
+                                  );
+                                },)),
 
+                                ),
+                                );
+                              }, icon: const Icon(Icons.wallet_giftcard_outlined))
                             ],
                           )
                         ],
