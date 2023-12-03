@@ -27,6 +27,11 @@ final userPostProvider =
   return ref.watch(postControllerProvider.notifier).fetchUserPosts(communities);
 });
 
+final guestPostsProvider = StreamProvider((ref) {
+  final postController = ref.watch(postControllerProvider.notifier);
+  return postController.fetchGuestPosts();
+});
+
 final getPostBiIdProvider = StreamProvider.family((ref, String postId) {
   return ref.watch(postControllerProvider.notifier).getPostId(postId);
 });
@@ -161,6 +166,11 @@ if(context.mounted)
       return _postRepository.fetchUserPosts(communities);
     }
     return Stream.value([]);
+  }
+
+  Stream<List<Post>> fetchGuestPosts() {
+      return _postRepository.fetchGuestPosts();
+
   }
 
   Future<void> deletePost(Post post, BuildContext context) async {

@@ -56,6 +56,7 @@ ref.read(postControllerProvider.notifier).awardPost(context: context,post: post,
     final isTypeLink = post.type == "link";
     final currentTheme = ref.watch(themeNotifierProvider);
     final user = ref.watch(userProvider)!;
+    final isGuest=!user.isAuthenticated;
     return Column(
       children: [
         Container(
@@ -173,7 +174,7 @@ ref.read(postControllerProvider.notifier).awardPost(context: context,post: post,
                             children: [
                               Row(
                                 children: [
-                                  IconButton(onPressed: () {
+                                  IconButton(onPressed: isGuest?(){}:() {
                                     upvote(ref);
                                   }, icon:  Icon(Constants.up,
                                   size: 30,
@@ -183,7 +184,7 @@ ref.read(postControllerProvider.notifier).awardPost(context: context,post: post,
                                   style: TextStyle(
                                     fontSize: 17
                                   )),
-                                  IconButton(onPressed: () {
+                                  IconButton(onPressed: isGuest?(){}: () {
                                     downvote(ref);
                                   }, icon:  Icon(Constants.down,
                                     size: 30,
@@ -220,7 +221,7 @@ ref.read(postControllerProvider.notifier).awardPost(context: context,post: post,
                               }, error: (error, stackTrace) {
                                 return Text(error.toString());
                               }, loading: () => Loader(),),
-                              IconButton(onPressed: () {
+                              IconButton(onPressed:  isGuest?(){}:() {
                                 showDialog(context: context, builder: (context) =>  Dialog(child:
                                 Padding(padding:
                                 const EdgeInsets.all(20),
