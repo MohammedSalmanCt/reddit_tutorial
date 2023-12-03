@@ -57,17 +57,24 @@ class AuthRepository {
   }
 
 
-  FutureEither<UserModel> signWithGoogle() async {
+  FutureEither<UserModel> signWithGoogle(bool isFromLogin) async {
     try {
       final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
       final googleAuth = await googleUser?.authentication;
       final credential = GoogleAuthProvider.credential(
           accessToken: googleAuth?.accessToken, idToken: googleAuth?.idToken);
+      UserCredential? userCredential;
+      if(isFromLogin)
+        {
+          userCredential = await _auth.signInWithCredential(credential);
+        }
+     else {
+        UserCredential userCredential =
+            await _auth.currentUser!.linkWithCredential(credential);
+      }
 
-      UserCredential userCredential =
-          await _auth.signInWithCredential(credential);
       UserModel userModel;
-      if (userCredential.additionalUserInfo!.isNewUser) {
+      if (userCredential!.additionalUserInfo!.isNewUser) {
         userModel = UserModel(
             name: userCredential.user!.displayName ?? "Untitled",
             profilePic: userCredential.user!.photoURL ?? "",
