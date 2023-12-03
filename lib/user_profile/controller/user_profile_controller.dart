@@ -73,9 +73,17 @@ class UserProfileController extends StateNotifier<bool> {
   Future<void> updateUserKarma(
       UserKarma userKarma, BuildContext context) async {
     UserModel user = _ref.read(userProvider)!;
-    user = user.copyWith(karma: userKarma.karma);
+    user = user.copyWith(karma:user.karma + userKarma.karma );
+    print(user.name);
+    print("user.nameaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
     final res = await _profileRepoitory.updateUserKarma(user);
+    print("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaapcontroller");
+    print(userKarma.karma);
+    print(user.karma);
     res.fold((l) => showSnackBar(context, l.message),
-        (r) => _ref.read(userProvider.notifier).update((state) => user));
+        (r) => _ref.read(userProvider.notifier).update((state) => user)
+    );
+    print(user.karma);
+    print("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaQQQQQQQQQQQQQQQQQQQQQQ");
   }
 }

@@ -46,12 +46,10 @@ class UserProfileRepoitory {
             .toList());
   }
 
-  FutureVoid updateUserKarma(
-      UserModel user,
-      ) async {
+  FutureVoid updateUserKarma(UserModel user) async {
     try {
-      return right(_post.doc(user.uid).update({
-        "karma":user.karma
+      return right(_user.doc(user.uid).update({
+        'karma': user.karma,
       }));
     } on FirebaseException catch (e) {
       throw e.message!;
