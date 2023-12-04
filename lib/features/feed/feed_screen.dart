@@ -47,6 +47,8 @@ class FeedScreen extends ConsumerWidget {
           itemCount:data.length ,
           itemBuilder: (context, index) {
             final post=data[index];
+            print("ssssssssssssssssssssssssssssssssssssssss");
+            print(post);
             return PostCard(post: post);
           },);
       }, error: (error, stackTrace) {
