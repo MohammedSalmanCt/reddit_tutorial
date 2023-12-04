@@ -50,14 +50,16 @@ class PostRepository {
 
   Stream<List<Post>> fetchGuestPosts() {
     return _posts.orderBy('createdAt', descending: true).limit(10).snapshots().map(
-          (event) => event.docs
-          .map(
-            (e) => Post.fromMap(
-          e.data() as Map<String, dynamic>,
-        ),
-      )
-          .toList(),
-    );
+          (event) {
+            List<Post> post=[];
+            for(var i in event.docs)
+              {
+                post.add(Post.fromMap(i.data() as Map<String,dynamic>));
+              }
+            print(post);
+            print("postaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+            return post;
+          });
   }
 
   FutureVoid deletePost(Post post) async {
