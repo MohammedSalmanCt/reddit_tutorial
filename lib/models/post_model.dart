@@ -94,58 +94,15 @@ class Post {
       description: map['description'],
       communityName: map['communityName'] ?? '',
       communityProfilePic: map['communityProfilePic'] ?? '',
-      upvotes: List<String>.from(map['upvotes']),
-      downvotes: List<String>.from(map['downvotes']),
+      upvotes: List<String>.from(map['upvotes'])??[],
+      downvotes: List<String>.from(map['downvotes']??[]),
       commentCount: map['commentCount']?.toInt() ?? 0,
       username: map['username'] ?? '',
       uid: map['uid'] ?? '',
       type: map['type'] ?? '',
       createdAt: DateTime.fromMillisecondsSinceEpoch(map['createdAt']),
-      awards: List<String>.from(map['awards']),
+      awards: List<String>.from(map['awards']??[]),
     );
   }
 
-  @override
-  String toString() {
-    return 'Post(id: $id, title: $title, link: $link, description: $description, communityName: $communityName, communityProfilePic: $communityProfilePic, upvotes: $upvotes, downvotes: $downvotes, commentCount: $commentCount, username: $username, uid: $uid, type: $type, createdAt: $createdAt, awards: $awards)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-
-    return other is Post &&
-        other.id == id &&
-        other.title == title &&
-        other.link == link &&
-        other.description == description &&
-        other.communityName == communityName &&
-        other.communityProfilePic == communityProfilePic &&
-        listEquals(other.upvotes, upvotes) &&
-        listEquals(other.downvotes, downvotes) &&
-        other.commentCount == commentCount &&
-        other.username == username &&
-        other.uid == uid &&
-        other.type == type &&
-        other.createdAt == createdAt &&
-        listEquals(other.awards, awards);
-  }
-
-  @override
-  int get hashCode {
-    return id.hashCode ^
-    title.hashCode ^
-    link.hashCode ^
-    description.hashCode ^
-    communityName.hashCode ^
-    communityProfilePic.hashCode ^
-    upvotes.hashCode ^
-    downvotes.hashCode ^
-    commentCount.hashCode ^
-    username.hashCode ^
-    uid.hashCode ^
-    type.hashCode ^
-    createdAt.hashCode ^
-    awards.hashCode;
-  }
 }
