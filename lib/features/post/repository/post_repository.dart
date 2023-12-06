@@ -56,8 +56,6 @@ class PostRepository {
               {
                 post.add(Post.fromMap(i.data() as Map<String,dynamic>));
               }
-            print(post);
-            print("postaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
             return post;
           });
   }
