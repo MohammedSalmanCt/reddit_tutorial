@@ -4,6 +4,7 @@ import 'package:reddit_tutorial/core/common/loader.dart';
 import 'package:reddit_tutorial/core/common/sign_in_button.dart';
 import 'package:reddit_tutorial/core/contants/constants.dart';
 import 'package:reddit_tutorial/features/auth/controller/auth_controller.dart';
+import 'package:reddit_tutorial/responsive/responsive.dart';
 import '../../../main.dart';
 
 class LoginScreen extends ConsumerWidget {
@@ -57,7 +58,7 @@ class LoginScreen extends ConsumerWidget {
           const SizedBox(
             height:20,
           ),
-          const SignInButton(),
+            const Responsive(child:  SignInButton()),
         ],
       ),
     );
