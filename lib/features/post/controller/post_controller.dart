@@ -169,7 +169,6 @@ if(context.mounted)
   }
 
   Stream<List<Post>> fetchGuestPosts() {
-    print("contro;;;;;;;;;;;;;;;;;;;;;;;;;;");
       return _postRepository.fetchGuestPosts();
 
   }

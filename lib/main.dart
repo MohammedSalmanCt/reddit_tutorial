@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:reddit_tutorial/core/common/error_text.dart';
@@ -14,10 +15,24 @@ var size,h,w;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
-  runApp(const ProviderScope(child: MyApp()));
+  if (kIsWeb) {
+    await Firebase.initializeApp(
+        options: FirebaseOptions(
+            apiKey: "AIzaSyBsR9M2KxR42qc8OlTk933QEt6piB7BjEY",
+            authDomain: "famous-archway-397605.firebaseapp.com",
+            projectId: "famous-archway-397605",
+            storageBucket: "famous-archway-397605.appspot.com",
+            messagingSenderId: "36796006740",
+            appId: "1:36796006740:web:3ba6fa90ca5e391ff0c8c1",
+            measurementId: "G-CW0WWWQ0PB"
+        )
+    );
+  }
+  else {
+    await Firebase.initializeApp();
+  }
+  runApp( ProviderScope(child: MyApp()));
 }
-
 class MyApp extends ConsumerStatefulWidget {
   const MyApp({super.key});
 
