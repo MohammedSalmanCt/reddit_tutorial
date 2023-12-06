@@ -10,6 +10,7 @@ import 'package:routemaster/routemaster.dart';
 import 'package:flutter/material.dart';
 import 'features/auth/screen/login_screen.dart';
 import 'features/community/screens/communty_screen.dart';
+import 'features/post/screen/add_post_screen.dart';
 import 'features/post/screen/add_post_type_screen.dart';
 
 //////LogedOutRoute
@@ -35,4 +36,5 @@ final logedInRout=RouteMap(routes: {
   '/edit-profile/:uid':(routDat)=>  MaterialPage(child: EditProfileScreen(uid: routDat.pathParameters["uid"]!,)),
   '/add-post/:type':(routDat)=>  MaterialPage(child: AddPostTypeScreen(type: routDat.pathParameters["type"]!,)),
   '/post/:postId/comments':(routDat)=>  MaterialPage(child: CommentScreen(postId: routDat.pathParameters["postId"]!,)),
+  '/add-post':(routDat)=>  MaterialPage(child: AddPostScreen()),
 });
