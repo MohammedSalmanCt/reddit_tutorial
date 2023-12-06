@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -7,6 +8,7 @@ import 'package:reddit_tutorial/features/auth/controller/auth_controller.dart';
 import 'package:reddit_tutorial/features/home/delegates/search_community_delegate.dart';
 import 'package:reddit_tutorial/features/home/drawer/community_list_drawer.dart';
 import 'package:reddit_tutorial/features/home/drawer/profile_drawer.dart';
+import 'package:routemaster/routemaster.dart';
 
 import '../../../core/theme/pallet.dart';
 
@@ -55,6 +57,10 @@ void onPageChanged(int page)
           IconButton(onPressed: () {
             showSearch(context: context, delegate: SearchCommunityDelegate(ref: ref));
           }, icon: Icon(Icons.search)),
+          IconButton(onPressed:() {
+            Routemaster.of(context).push('/add_post');
+          },
+              icon: Icon(Icons.add)),
           Builder(
             builder: (context) {
               return IconButton(onPressed: () {
@@ -69,7 +75,7 @@ void onPageChanged(int page)
       body: Constants.tabWidgets[_page],
       drawer: const CommunityListDrawer(),
       endDrawer: isGuest ? null:const ProfileDrawer() ,
-      bottomNavigationBar:isGuest ? null: CupertinoTabBar(
+      bottomNavigationBar:isGuest || kIsWeb ? null: CupertinoTabBar(
         activeColor: currentheme.iconTheme.color,
         backgroundColor: currentheme.backgroundColor,
         items: const[
