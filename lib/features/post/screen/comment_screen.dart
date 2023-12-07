@@ -5,6 +5,7 @@ import 'package:reddit_tutorial/core/common/loader.dart';
 import 'package:reddit_tutorial/core/common/post_card.dart';
 import 'package:reddit_tutorial/features/post/controller/post_controller.dart';
 import 'package:reddit_tutorial/features/post/screen/widget/comment_card.dart';
+import 'package:reddit_tutorial/responsive/responsive.dart';
 
 import '../../../models/post_model.dart';
 import '../../auth/controller/auth_controller.dart';
@@ -50,13 +51,15 @@ class _CommentScreenState extends ConsumerState<CommentScreen> {
                 height: 10,
               ),
               if(!isGuest)
-              TextField(
-                onSubmitted: (value) => addComment(post: data),
-                controller: commentController,
-                decoration: const InputDecoration(
-                    hintText: "What are your thougths",
-                    filled: true,
-                    border: InputBorder.none),
+              Responsive(
+                child: TextField(
+                  onSubmitted: (value) => addComment(post: data),
+                  controller: commentController,
+                  decoration: const InputDecoration(
+                      hintText: "What are your thougths",
+                      filled: true,
+                      border: InputBorder.none),
+                ),
               ),
               ref.watch(getCommentsProvider(widget.postId)).when(
                     data: (comment) {
