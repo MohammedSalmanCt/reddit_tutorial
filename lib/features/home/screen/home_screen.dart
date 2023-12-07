@@ -58,7 +58,7 @@ void onPageChanged(int page)
             showSearch(context: context, delegate: SearchCommunityDelegate(ref: ref));
           }, icon: Icon(Icons.search)),
           IconButton(onPressed:() {
-            Routemaster.of(context).push('/add_post');
+            Routemaster.of(context).push('/add-post');
           },
               icon: Icon(Icons.add)),
           Builder(
