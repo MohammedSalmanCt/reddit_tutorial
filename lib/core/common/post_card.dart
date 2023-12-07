@@ -1,5 +1,6 @@
 import 'package:any_link_preview/any_link_preview.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:reddit_tutorial/core/common/loader.dart';
@@ -55,7 +56,8 @@ ref.read(postControllerProvider.notifier).awardPost(context: context,post: post,
     final isTypeImage = post.type == "image";
     final isTypeText = post.type == "text";
     final isTypeLink = post.type == "link";
-    final currentTheme = ref.watch(themeNotifierProvider);
+    final
+    currentTheme = ref.watch(themeNotifierProvider);
     final user = ref.watch(userProvider)!;
     final isGuest=!user.isAuthenticated;
     return Responsive(
@@ -67,7 +69,29 @@ ref.read(postControllerProvider.notifier).awardPost(context: context,post: post,
             ),
             padding: const EdgeInsets.symmetric(vertical: 10),
             child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                if(kIsWeb)
+                Column(
+                  children: [
+                    IconButton(onPressed: isGuest?(){}:() {
+                      upvote(ref);
+                    }, icon:  Icon(Constants.up,
+                      size: 30,
+                      color: post.upvotes.contains(user.uid)?Pallete.redColor:null,)
+                    ),
+                    Text('${post.upvotes.length -post.downvotes.length ==0 ?"vote": post.upvotes.length -post.downvotes.length}',
+                        style: TextStyle(
+                            fontSize: 17
+                        )),
+                    IconButton(onPressed: isGuest?(){}: () {
+                      downvote(ref);
+                    }, icon:  Icon(Constants.down,
+                      size: 30,
+                      color: post.downvotes.contains(user.uid)?Pallete.blueColor:null,)
+                    ),
+                  ],
+                ),
                 Expanded(
                   child: Column(
                     children: [
@@ -152,7 +176,7 @@ ref.read(postControllerProvider.notifier).awardPost(context: context,post: post,
                               SizedBox(height: MediaQuery.of(context).size.height *(0.35),
                               width: double.infinity,
                               child: Image.network(post.link!,
-                              fit: BoxFit.fill),),
+                              fit: BoxFit.cover),),
 
                             if(isTypeLink)
                               Padding(
@@ -174,6 +198,7 @@ ref.read(postControllerProvider.notifier).awardPost(context: context,post: post,
                             Row(
                               mainAxisAlignment:MainAxisAlignment.spaceBetween ,
                               children: [
+                                if(!kIsWeb)
                                 Row(
                                   children: [
                                     IconButton(onPressed: isGuest?(){}:() {

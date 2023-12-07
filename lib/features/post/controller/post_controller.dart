@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -126,12 +127,14 @@ if(context.mounted)
       {required BuildContext context,
       required String title,
       required Community selectedCommunity,
-      required File? file}) async {
+      required File? file,
+      required Uint8List? webFile}) async {
     state = true;
     String postId = const Uuid().v1();
     final user = _ref.read(userProvider)!;
     final imageRes = await _strorageRepository.storeFile(
-        path: "posts/${selectedCommunity.name}", id: postId, file: file);
+        path: "posts/${selectedCommunity.name}", id: postId, file: file,
+    webFile:webFile );
 
     imageRes.fold((l) => showSnackBar(context, l.message), (imgUrl) async {
       final Post post = Post(
